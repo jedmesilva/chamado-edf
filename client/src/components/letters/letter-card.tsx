@@ -14,8 +14,8 @@ interface LetterCardProps {
 const LetterCard = ({ letter }: LetterCardProps) => {
   // Handle both Letter and SupabaseCarta types
   const id = 'id_sumary_carta' in letter ? letter.id_sumary_carta : letter.id;
-  const title = 'title' in letter ? letter.title : (letter.jsonContent?.title || '');
-  const description = 'description' in letter ? letter.description : (letter.jsonContent?.description || '');
+  const title = letter.title || '';
+  const description = letter.description || '';
   const date = 'date_send' in letter ? letter.date_send : letter.publishedAt;
   const read = false; // We'll need to implement this feature later
 

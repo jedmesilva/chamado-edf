@@ -39,8 +39,8 @@ export type Letter = {
   description: string;
   content: string;
   publishedAt: Date;
-  jsonContent?: any;
-  markdownContent?: string | null;
+  jsonContent: any | null;
+  markdownContent: string | null;
 };
 export type InsertLetter = z.infer<typeof insertLetterSchema>;
 
