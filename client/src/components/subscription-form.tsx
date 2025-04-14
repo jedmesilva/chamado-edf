@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { supabaseClient } from "@/lib/supabase";
 
 const subscribeSchema = z.object({
   email: z.string().email("Por favor, informe um email válido"),
@@ -31,7 +33,8 @@ const SubscriptionForm = () => {
   const onSubmit = async (data: SubscribeFormValues) => {
     setIsSubmitting(true);
     try {
-      // Registra o email no Supabase e verifica se já existe
+      // 1. Registra o email no Supabase e verifica se já existe
+      console.log(`Enviando email ${data.email} para inscrição...`);
       const response = await apiRequest<{
         message: string;
         email: string;
@@ -100,7 +103,7 @@ const SubscriptionForm = () => {
             />
             <Button 
               type="submit" 
-              className="px-6 py-3 bg-gray-800 text-white rounded hover:bg-gray-700"
+              className="px-6 py-3 bg-gray-800 text-white rounded hover:bg-gray-700 whitespace-nowrap"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
