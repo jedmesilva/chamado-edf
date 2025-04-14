@@ -1,3 +1,4 @@
+
 import { useSupabaseAuth } from "@/hooks/use-supabase-auth";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -28,25 +29,14 @@ const Header = ({ hideAuthButton = false }: HeaderProps) => {
       {!hideAuthButton && (
         <div className="flex items-center gap-4">
           {user ? (
-            <>
-              {!location.includes("/dashboard") && (
-                <Button
-                  variant="ghost"
-                  className="text-sm hover:text-gray-600"
-                  onClick={() => setLocation("/dashboard")}
-                >
-                  Dashboard
-                </Button>
-              )}
-              <Button
-                variant="ghost"
-                className="text-sm hover:text-gray-600"
-                onClick={handleLogout}
-                disabled={isLoading}
-              >
-                {isLoading ? "Saindo..." : "Sair"}
-              </Button>
-            </>
+            <Button
+              variant="ghost"
+              className="text-sm hover:text-gray-600"
+              onClick={handleLogout}
+              disabled={isLoading}
+            >
+              {isLoading ? "Saindo..." : "Sair"}
+            </Button>
           ) : (
             isLandingPage && (
               <Button

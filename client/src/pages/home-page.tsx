@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { useSupabaseAuth } from "@/hooks/use-supabase-auth";
 import Header from "@/components/layout/header";
