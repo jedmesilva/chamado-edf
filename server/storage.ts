@@ -1,3 +1,4 @@
+
 import { users, letters, type User, type InsertUser, type Letter, type InsertLetter } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
@@ -199,7 +200,12 @@ Os Guardiões da Edificação`,
 
   async createLetter(insertLetter: InsertLetter): Promise<Letter> {
     const id = this.currentLetterId++;
-    const letter: Letter = { ...insertLetter, id };
+    const letter: Letter = { 
+      ...insertLetter, 
+      id,
+      jsonContent: null,
+      markdownContent: null
+    };
     this.letters.set(id, letter);
     return letter;
   }

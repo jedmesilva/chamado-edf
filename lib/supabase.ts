@@ -1,9 +1,15 @@
+
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // Cria o cliente Supabase com as credenciais do ambiente
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.SUPABASE_URL || '';
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || '';
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+
+// Check if environment variables are set
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('SUPABASE_URL or SUPABASE_ANON_KEY environment variables not set');
+}
 
 // Cliente para operações com a chave anônima (seguro para usar no lado do cliente)
 export const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);

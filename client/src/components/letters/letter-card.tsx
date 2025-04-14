@@ -1,19 +1,24 @@
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { Letter, SupabaseCarta } from "@shared/schema";
 
 interface LetterCardProps {
-  id: number;
-  title: string;
-  description: string;
-  date: string;
-  read?: boolean;
+  letter: Letter | SupabaseCarta;
 }
 
-const LetterCard = ({ id, title, description, date, read = false }: LetterCardProps) => {
+const LetterCard = ({ letter }: LetterCardProps) => {
+  // Handle both Letter and SupabaseCarta types
+  const id = 'id_sumary_carta' in letter ? letter.id_sumary_carta : letter.id;
+  const title = 'title' in letter ? letter.title : (letter.jsonContent?.title || '');
+  const description = 'description' in letter ? letter.description : (letter.jsonContent?.description || '');
+  const date = 'date_send' in letter ? letter.date_send : letter.publishedAt;
+  const read = false; // We'll need to implement this feature later
+
   const dateObj = new Date(date);
   const formattedDate = formatDistanceToNow(dateObj, { 
     addSuffix: true,

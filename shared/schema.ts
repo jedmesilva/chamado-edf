@@ -1,3 +1,4 @@
+
 import { pgTable, text, serial, integer, boolean, timestamp, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -31,7 +32,16 @@ export const insertLetterSchema = createInsertSchema(letters);
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
-export type Letter = typeof letters.$inferSelect;
+export type Letter = {
+  id: number;
+  number: number;
+  title: string;
+  description: string;
+  content: string;
+  publishedAt: Date;
+  jsonContent?: any;
+  markdownContent?: string | null;
+};
 export type InsertLetter = z.infer<typeof insertLetterSchema>;
 
 // Tipo para a carta vinda do Supabase (Carta)

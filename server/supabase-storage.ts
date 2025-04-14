@@ -43,6 +43,8 @@ export class SupabaseStorage implements IStorage {
       description: carta.jsonbody_carta?.description || 'Sem descrição',
       content: carta.markdonw_carta || carta.jsonbody_carta?.content || 'Sem conteúdo',
       publishedAt: new Date(carta.date_send),
+      jsonContent: carta.jsonbody_carta || null,
+      markdownContent: carta.markdonw_carta || null
     };
   }
 
@@ -124,5 +126,3 @@ export class SupabaseStorage implements IStorage {
     throw new Error("Criação de cartas não implementada no Supabase");
   }
 }
-
-// Não precisamos importar IStorage novamente, já importamos no topo do arquivo
