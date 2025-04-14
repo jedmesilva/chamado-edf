@@ -7,7 +7,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 // For production, set these in your hosting environment
 const supabaseUrl = process.env.SUPABASE_URL || 'https://pzthdzkjcrhxbqkzlcxp.supabase.co';
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6dGhkemtqY3JoeGJxa3psY3hwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1NjY5OTAsImV4cCI6MjA2MDE0Mjk5MH0.bQFMOxvoFZWNfLkgnR7huOS5JyeYr6sjX5SlIkCMSJY';
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6dGhkemtqY3JoeGJxa3psY3hwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDU2Njk5MCwiZXhwIjoyMDYwMTQyOTkwfQ.qLXBzSWOxECjL80gLK-2YiBz6wETY3HGwWK9h5YTSAQ';
 
 // Log that we're using default values if environment variables are not set
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
@@ -27,6 +27,12 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey, {
 
 // Configuração especial para contornar o RLS (Row Level Security)
 export const getRLSBypassClient = (): SupabaseClient => {
+  if (!supabaseServiceRoleKey) {
+    console.error('Service role key is required for RLS bypass client');
+    // Return regular client as fallback
+    return supabaseClient;
+  }
+  
   return createClient(supabaseUrl, supabaseServiceRoleKey, {
     auth: {
       autoRefreshToken: false,
